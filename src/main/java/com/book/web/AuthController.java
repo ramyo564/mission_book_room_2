@@ -24,8 +24,8 @@ public class AuthController {
     private final TokenProvider tokenProvider;
 
 
-    @PostMapping("/signup-customer")
-    public ResponseEntity<?> signupCustomer(
+    @PostMapping("/signup-member")
+    public ResponseEntity<?> signupMember(
             @RequestBody AuthUser.SignUp request) {
         // 회원가입을 위한 API
         // 매장주인 및 파트너십 가입은 ROLE 부분에 입력
@@ -40,8 +40,8 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/signin-customer")
-    public ResponseEntity<?> signinCustomer(
+    @PostMapping("/signin-member")
+    public ResponseEntity<?> signinMember(
             @RequestBody AuthUser.SignIn request) {
         // 로그인을 위한 API
         try {
