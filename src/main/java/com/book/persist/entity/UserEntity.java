@@ -31,6 +31,7 @@ public class UserEntity implements UserDetails {
     @Column
     private Timestamp createdAt;
 
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "member_roles", joinColumns = @JoinColumn(name = "member_id"))
     @Column

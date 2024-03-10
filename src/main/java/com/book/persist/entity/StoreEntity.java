@@ -34,6 +34,11 @@ public class StoreEntity {
     @Column
     private Timestamp updatedAt;
 
+    @Column
+    private boolean deleted;
+    @Column
+    private Timestamp deletedAt;
+
     @ManyToOne
     @JoinColumn(name = "phoneNumber")
     private UserEntity owner;

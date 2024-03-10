@@ -1,11 +1,11 @@
 package com.book.service;
 
 import com.book.exception.impl.auth.NotAuthException;
+import com.book.exception.impl.store.AlreadyDeletedStoreException;
 import com.book.exception.impl.store.DuplicatedStoreException;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Store;
 import com.book.persist.StoreRepository;
-import com.book.persist.UserRepository;
 import com.book.persist.entity.StoreEntity;
 import com.book.persist.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static com.book.security.JwtUserExtract.currentUser;
 
@@ -101,5 +100,26 @@ public class StoreService {
 
     }
 
+    public void delete(String store_name){
+        // 현재 사용자의 인증 정보 가져오기
+        UserEntity currentUser = currentUser();
+        // 권한이 없는 일반 고객일 경우
+        List<String> roles = currentUser.getRoles();
+        if (!roles.contains("ROLE_OWNER")) {
+            //예외 작동 안함..
+            throw new NotAuthException();
+        }
+        StoreEntity storeExist = storeRepository.findByOwner_PhoneNumberAndName(
+                        currentUser.getPhoneNumber(), store_name)
+                .orElseThrow(NotRegisteredStoreException::new);
+
+        if(storeExist.isDeleted()){
+            //이미 삭제됨
+            throw new AlreadyDeletedStoreException();
+        }
+        storeExist.setDeleted(true);
+        storeExist.setDeletedAt(Timestamp.valueOf(LocalDateTime.now()));
+        storeRepository.save(storeExist);
+    }
 
 }

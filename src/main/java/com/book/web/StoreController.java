@@ -1,6 +1,7 @@
 package com.book.web;
 
 import com.book.exception.impl.auth.NotAuthException;
+import com.book.exception.impl.store.AlreadyDeletedStoreException;
 import com.book.exception.impl.store.DuplicatedStoreException;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Store;
@@ -74,5 +75,29 @@ public class StoreController {
         }
 
 
+    }
+
+    @DeleteMapping("/delete/{store_name}")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
+    public ResponseEntity<?> deleteStore(
+            @PathVariable String store_name) {
+
+        try {
+            this.storeService.delete(store_name);
+            return ResponseEntity.ok().build();
+        } catch (AlreadyDeletedStoreException ex) {
+            // 이미 삭제된 점포일 경우
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        } catch (NotAuthException ex) {
+            // role 권한이 없을 때
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        } catch (NotRegisteredStoreException ex) {
+            // 등록되지 않은 상점일 경우
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+
+        }
     }
 }
