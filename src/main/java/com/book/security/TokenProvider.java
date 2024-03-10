@@ -32,7 +32,7 @@ public class TokenProvider {
 
     public String generateToken(String username, List<String> roles){
         // 토큰 생성 메서드
-        System.out.println("username token = " + username);
+        // System.out.println("username token = " + username);
         Claims claims = Jwts.claims().setSubject(username);
         claims.put(KEY_ROLES, roles);
 
