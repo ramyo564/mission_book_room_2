@@ -7,9 +7,9 @@
     <list default="true" id="0fdc620b-2970-4e22-afc4-32d3f03fc0f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/book/model/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/model/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/StoreEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/StoreEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/StoreController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,8 +83,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.book.exception.impl.auth" />
       <recent name="com.book.exception.impl.store" />
+      <recent name="com.book.exception.impl.auth" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\user\Documents\GitHub\mission_book_room_2\src\main\java\com\book\service" />

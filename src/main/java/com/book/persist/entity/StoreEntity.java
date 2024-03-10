@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +31,8 @@ public class StoreEntity {
     private String detail;
     @Column
     private Timestamp createdAt;
+    @Column
+    private Timestamp updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "phoneNumber")
