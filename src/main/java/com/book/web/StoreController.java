@@ -1,5 +1,7 @@
 package com.book.web;
 
+import com.book.exception.impl.auth.NotAuthException;
+import com.book.exception.impl.store.DuplicatedStoreException;
 import com.book.model.Store;
 import com.book.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +22,30 @@ import java.time.LocalDateTime;
 public class StoreController {
 
     private final StoreService storeService;
+
     @PostMapping("/register-store")
     @PreAuthorize("hasRole('ROLE_OWNER')")
     public ResponseEntity<?> registerStore(
-            @RequestBody Store.Register request){
+            @RequestBody Store.Register request) {
 
-        var result =
-                this.storeService.register(request);
-        return ResponseEntity.ok(result);
+        try {
+            var result =
+                    this.storeService.register(request);
+            return ResponseEntity.ok(result);
+
+        } catch (NotAuthException ex) {
+            // role 권한이 없을 때
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+
+        } catch (DuplicatedStoreException ex) {
+            // 1분 이내 중복 상점 등록시
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+
+        }
+
     }
-
 
 
 }
