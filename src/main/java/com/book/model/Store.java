@@ -19,6 +19,7 @@ public class Store {
         private String latitude;
         private String longitude;
         private String detail;
+        private int table;
         private Timestamp createdAt = Timestamp.from(Instant.now());
 
         public StoreEntity toEntity(){
@@ -32,6 +33,7 @@ public class Store {
                     .latitude(this.latitude)
                     .longitude(this.longitude)
                     .detail(this.detail)
+                    .table(this.table)
                     .createdAt(this.createdAt)
                     .build();
         }
@@ -45,6 +47,7 @@ public class Store {
         private String latitude;
         private String longitude;
         private String detail;
+        private int table;
         private Timestamp updatedAt = Timestamp.from(Instant.now());
 
         public StoreEntity toEntity(){
@@ -58,6 +61,7 @@ public class Store {
                     .latitude(this.latitude)
                     .longitude(this.longitude)
                     .detail(this.detail)
+                    .table(this.table)
                     .updatedAt(this.updatedAt)
                     .build();
         }

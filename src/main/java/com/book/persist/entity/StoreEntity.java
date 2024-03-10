@@ -17,7 +17,7 @@ public class StoreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column
     private String name;
@@ -29,6 +29,8 @@ public class StoreEntity {
     private String longitude;
     @Column
     private String detail;
+    @Column
+    private int table;
     @Column
     private Timestamp createdAt;
     @Column

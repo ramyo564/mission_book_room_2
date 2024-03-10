@@ -92,6 +92,7 @@ public class StoreService {
                 .detail(request.getDetail())
                 .updatedAt(request.getUpdatedAt())
                 .owner(storeExist.getOwner())
+                .table(request.getTable())
                 .createdAt(storeExist.getCreatedAt())
                 .build();
 
