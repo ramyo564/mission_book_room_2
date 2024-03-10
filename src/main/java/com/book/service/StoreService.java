@@ -35,7 +35,8 @@ public class StoreService {
                 .countByNameAndAddressAndCreatedAtIsGreaterThanEqual(
                         request.getName(),
                         request.getAddress(),
-                        Timestamp.valueOf(checkTime));
+                        checkTime);
+
 
         if(checkDuplicator > 0){
             throw new DuplicatedStoreException();
@@ -63,7 +64,7 @@ public class StoreService {
                 .countByNameAndAddressAndCreatedAtIsGreaterThanEqual(
                         request.getName(),
                         request.getAddress(),
-                        Timestamp.valueOf(checkTime));
+                        checkTime);
 
         if(checkDuplicator > 0){
             throw new DuplicatedStoreException();
@@ -92,7 +93,7 @@ public class StoreService {
                 .detail(request.getDetail())
                 .updatedAt(request.getUpdatedAt())
                 .owner(storeExist.getOwner())
-                .table(request.getTable())
+                .totalTable(request.getTable())
                 .createdAt(storeExist.getCreatedAt())
                 .build();
 
@@ -119,7 +120,7 @@ public class StoreService {
             throw new AlreadyDeletedStoreException();
         }
         storeExist.setDeleted(true);
-        storeExist.setDeletedAt(Timestamp.valueOf(LocalDateTime.now()));
+        storeExist.setDeletedAt(LocalDateTime.now());
         storeRepository.save(storeExist);
     }
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -30,19 +31,19 @@ public class StoreEntity {
     @Column
     private String detail;
     @Column
-    private int table;
+    private int totalTable;
     @Column
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Column
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column
     private boolean deleted;
     @Column
-    private Timestamp deletedAt;
+    private LocalDateTime deletedAt;
 
     @ManyToOne
-    @JoinColumn(name = "phoneNumber")
+    @JoinColumn(name = "owner_id")
     private UserEntity owner;
 
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 import static com.book.security.JwtUserExtract.currentUser;
 
@@ -19,8 +20,8 @@ public class Store {
         private String latitude;
         private String longitude;
         private String detail;
-        private int table;
-        private Timestamp createdAt = Timestamp.from(Instant.now());
+        private int totalTable;
+        private LocalDateTime createdAt = LocalDateTime.now();
 
         public StoreEntity toEntity(){
 
@@ -33,7 +34,7 @@ public class Store {
                     .latitude(this.latitude)
                     .longitude(this.longitude)
                     .detail(this.detail)
-                    .table(this.table)
+                    .totalTable(this.totalTable)
                     .createdAt(this.createdAt)
                     .build();
         }
@@ -48,7 +49,7 @@ public class Store {
         private String longitude;
         private String detail;
         private int table;
-        private Timestamp updatedAt = Timestamp.from(Instant.now());
+        private LocalDateTime updatedAt = LocalDateTime.now();
 
         public StoreEntity toEntity(){
 
@@ -61,7 +62,7 @@ public class Store {
                     .latitude(this.latitude)
                     .longitude(this.longitude)
                     .detail(this.detail)
-                    .table(this.table)
+                    .totalTable(this.table)
                     .updatedAt(this.updatedAt)
                     .build();
         }
