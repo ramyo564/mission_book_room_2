@@ -24,19 +24,21 @@ public class ReviewService {
     private final ReservationRepository reservationRepository;
 
     public ReviewEntity writeReview(
-            Long reservationId, Review.Writing reviewWriting){
+            Long reservationId, Review.Writing reviewWriting) {
         // 예약정보 갖고 오기 (예약 승인 및 실제로 도착한 경우)
         ReservationEntity reservation =
                 reservationRepository
-                        .findByIdAndApprovedIsTrueAndArrivedIsTrue(reservationId)
+                        .findByIdAndApprovedIsTrueAndArrivedIsTrue(
+                                reservationId)
                         .orElseThrow(NotReviewAuthException::new);
 
         // 해당 리뷰 작성자 확인
         String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
+
         log.info("현재 로그인한 고객 정보 " + currentCustomerPhoneNumber);
         log.info(
                 "예약자 고객 정보 " + reservation.getCustomerName()
-                .getPhoneNumber());
+                        .getPhoneNumber());
 
         // 작성자와 일치하지 않을 경우 예외 처리
         if (!currentCustomerPhoneNumber
@@ -61,7 +63,7 @@ public class ReviewService {
 
     public ReviewEntity updateReview(
             Long reviewId, Review.Writing reviewWriting
-    ){
+    ) {
 
         // 리뷰 갖고 오기
         ReviewEntity review =
@@ -90,7 +92,7 @@ public class ReviewService {
         return this.reviewRepository.save(review);
     }
 
-    public void deleteReview(Long reviewId){
+    public void deleteReview(Long reviewId) {
         // 리뷰 갖고 오기
         ReviewEntity review =
                 reviewRepository
@@ -99,6 +101,7 @@ public class ReviewService {
 
         // 해당 리뷰 작성자 확인
         String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
+
         log.info("현재 로그인한 고객 정보 " + currentCustomerPhoneNumber);
         log.info(
                 "예약자 고객 정보 " + review.getStore().getOwner()
@@ -106,21 +109,23 @@ public class ReviewService {
 
         // 작성자 혹은 해당 매장 오너와 일치하지 않을 경우 예외 처리
         if (currentCustomerPhoneNumber
-                .equals(review.getUser().getPhoneNumber())){
+                .equals(review.getUser().getPhoneNumber())) {
+
             review.setDeleted(true);
             review.setDeletedAt(LocalDateTime.now());
             this.reviewRepository.save(review);
-        }
-        else if(currentCustomerPhoneNumber
+
+        } else if (currentCustomerPhoneNumber
                 .equals(review.getStore().getOwner().getPhoneNumber())
         ) {
+            // 삭제로직
             review.setDeleted(true);
             review.setDeletedAt(LocalDateTime.now());
             this.reviewRepository.save(review);
-        }else{
+
+        } else {
             throw new UnauthorizedAccessException();
         }
-
 
 
     }

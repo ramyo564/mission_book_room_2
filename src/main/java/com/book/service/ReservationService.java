@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class ReservationService {
         log.info(countTable + "승인 받은 테이블 갯수");
 
         if (totalTable > countTable) {
-            // 예약 가능
+            // 예약 가능 -> 매장 테이블 갯수보다 승인된 테이블 갯수가 적어야지 예약 가능
             ReservationEntity temp = booking.toEntity();
             temp.setStoreName(store);
 
@@ -93,13 +92,16 @@ public class ReservationService {
         ReservationEntity reservation =
                 reservationRepository.findById(reservationId)
                         .orElseThrow(EmptyBookingException::new);
+
         log.info(reservation.toString() + " 예약건 확인");
+
+        // 토큰정보와 일치하지 않을 경우 예외 처리
         if (!reservation.getStoreName().getOwner().getPhoneNumber()
                 .equals(currentUser().getPhoneNumber())) {
             throw new NotAuthException();
         }
 
-
+        // 매장 주인으로부터 승인 받았을 경우 처리 로직
         if (result.isApproved()) {
             reservation.setApproved(true);
             reservation.setStatus(BookingStatus.APPROVE);
@@ -120,10 +122,15 @@ public class ReservationService {
                         .orElseThrow(EmptyBookingException::new);
 
         //본인 확인
-        String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
+        String currentCustomerPhoneNumber =
+                currentUser().getPhoneNumber();
+
         log.info("현재 로그인한 고객 정보 " + currentCustomerPhoneNumber);
-        log.info("예약자 고객 정보 " + reservation.getCustomerName().getPhoneNumber());
-        if (!currentCustomerPhoneNumber.equals(reservation.getCustomerName().getPhoneNumber())) {
+        log.info("예약자 고객 정보 " +
+                reservation.getCustomerName().getPhoneNumber());
+
+        if (!currentCustomerPhoneNumber
+                .equals(reservation.getCustomerName().getPhoneNumber())) {
             throw new UnauthorizedAccessException();
         }
 
@@ -131,7 +138,9 @@ public class ReservationService {
             if (reservation.getStatus().equals(BookingStatus.DENY)) {
                 // 오너가 예약 거절시
                 throw new DenyBookingException();
-            } else if (reservation.getStatus().equals(BookingStatus.HOLDING)) {
+
+            } else if (reservation.getStatus()
+                    .equals(BookingStatus.HOLDING)) {
                 // 아직 holding 일 때
                 throw new HoldingBookingException();
             }
@@ -150,7 +159,9 @@ public class ReservationService {
 
         //본인 확인
         String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
-        if (!currentCustomerPhoneNumber.equals(reservation.getCustomerName().getPhoneNumber())) {
+
+        if (!currentCustomerPhoneNumber
+                .equals(reservation.getCustomerName().getPhoneNumber())) {
             throw new UnauthorizedAccessException();
         }
 

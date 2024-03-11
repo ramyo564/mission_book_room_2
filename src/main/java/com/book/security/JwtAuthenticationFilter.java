@@ -37,8 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = this.resolveTokenFromRequest(request);
 
         if (StringUtils.hasText(token)
-                        && this.tokenProvider.validateToken(token))
-        {
+                && this.tokenProvider.validateToken(token)) {
             Authentication auth =
                     this.tokenProvider.getAuthentication(token);
 
@@ -54,8 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String resolveTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader(TOKEN_HEADER);
 
-        if (!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX))
-        {
+        if (!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX)) {
             return token.substring(TOKEN_PREFIX.length());
         }
         return null;

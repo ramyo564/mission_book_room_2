@@ -38,7 +38,7 @@ public class StoreService {
                         checkTime);
 
 
-        if(checkDuplicator > 0){
+        if (checkDuplicator > 0) {
             throw new DuplicatedStoreException();
         }
 
@@ -56,7 +56,7 @@ public class StoreService {
     }
 
     public StoreEntity update(
-            Store.Update request, String store_name){
+            Store.Update request, String store_name) {
 
         // 1분 안에 중복 등록 방지
         LocalDateTime checkTime = LocalDateTime.now().minusMinutes(1);
@@ -66,7 +66,7 @@ public class StoreService {
                         request.getAddress(),
                         checkTime);
 
-        if(checkDuplicator > 0){
+        if (checkDuplicator > 0) {
             throw new DuplicatedStoreException();
         }
 
@@ -102,7 +102,7 @@ public class StoreService {
 
     }
 
-    public void delete(String store_name){
+    public void delete(String store_name) {
         // 현재 사용자의 인증 정보 가져오기
         UserEntity currentUser = currentUser();
         // 권한이 없는 일반 고객일 경우
@@ -111,11 +111,12 @@ public class StoreService {
             //예외 작동 안함..
             throw new NotAuthException();
         }
-        StoreEntity storeExist = storeRepository.findByOwner_PhoneNumberAndName(
+        StoreEntity storeExist = storeRepository
+                .findByOwner_PhoneNumberAndName(
                         currentUser.getPhoneNumber(), store_name)
                 .orElseThrow(NotRegisteredStoreException::new);
 
-        if(storeExist.isDeleted()){
+        if (storeExist.isDeleted()) {
             //이미 삭제됨
             throw new AlreadyDeletedStoreException();
         }

@@ -30,7 +30,7 @@ public class TokenProvider {
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
-    public String generateToken(String username, List<String> roles){
+    public String generateToken(String username, List<String> roles) {
         // 토큰 생성 메서드
         // System.out.println("username token = " + username);
         Claims claims = Jwts.claims().setSubject(username);
@@ -48,21 +48,22 @@ public class TokenProvider {
                 .compact();
 
     }
-    private Claims parseClaims(String token){
+
+    private Claims parseClaims(String token) {
         // 토큰 유효 여부
-        try{
+        try {
             return Jwts.parser().setSigningKey(this.secretKey)
                     .parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }
 
-    public String getUsername(String token){
+    public String getUsername(String token) {
         return this.parseClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token){
+    public boolean validateToken(String token) {
         // 토큰 빈 값이면 false 반환
         if (!StringUtils.hasText(token)) return false;
 
@@ -71,7 +72,7 @@ public class TokenProvider {
         return !claims.getExpiration().before(new Date());
     }
 
-    public Authentication getAuthentication(String jwt){
+    public Authentication getAuthentication(String jwt) {
         UserDetails userDetails =
                 this.userService.loadUserByUsername(
                         this.getUsername(jwt));

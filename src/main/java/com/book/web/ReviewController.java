@@ -28,7 +28,9 @@ public class ReviewController {
     ) {
         try {
             // 리뷰 작성 (작성자)
-            ReviewEntity reviewEntity = this.reviewService.writeReview(reservationId, reviewWriting);
+            ReviewEntity reviewEntity =
+                    this.reviewService
+                            .writeReview(reservationId, reviewWriting);
             return ResponseEntity.ok().build();
         } catch (NotReviewAuthException ex) {
             // 리뷰 예외처리
@@ -68,8 +70,8 @@ public class ReviewController {
     @DeleteMapping("/delete/{reviewId}")
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_OWNER')")
     public ResponseEntity<?> deleteReview(
-            @PathVariable Long reviewId){
-        try{
+            @PathVariable Long reviewId) {
+        try {
             // 리뷰 삭제 (작성자, 관리자)
             this.reviewService.deleteReview(reviewId);
             return ResponseEntity.ok().build();

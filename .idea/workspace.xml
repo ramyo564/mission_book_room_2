@@ -7,8 +7,17 @@
     <list default="true" id="0fdc620b-2970-4e22-afc4-32d3f03fc0f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/security/JwtUserExtract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/security/JwtUserExtract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/security/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/security/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/security/TokenProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/security/TokenProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/ReviewService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/ReviewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/StoreController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
@@ -95,6 +104,9 @@
       <recent name="C:\Users\user\Documents\GitHub\mission_book_room_2\src\main\java\com\book\persist\entity" />
       <recent name="C:\Users\user\Documents\GitHub\mission_book_room_2\src\main\java\com\book\persist" />
       <recent name="C:\Users\user\Documents\GitHub\mission_book_room_2\src\main\java\com\book\exception\impl\auth" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\Documents\GitHub\mission_book_room_2" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.book.web" />

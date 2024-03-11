@@ -59,12 +59,11 @@ public class AuthController {
             // 아이디가 없을 경우
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        } catch (WrongPasswordException ex){
+        } catch (WrongPasswordException ex) {
             // 비밀번호가 맞지 않을 경우
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
         }
-
 
 
     }

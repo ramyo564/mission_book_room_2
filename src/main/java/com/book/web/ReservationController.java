@@ -28,30 +28,31 @@ public class ReservationController {
     public ResponseEntity<?> bookTable(
             @PathVariable Long storeId,
             @RequestBody @Valid Reservation.Booking booking
-            ){
+    ) {
         try {
             this.reservationService.bookTable(storeId, booking);
             return ResponseEntity.ok().build();
-        }catch (FullBookingException ex){
+        } catch (FullBookingException ex) {
             // 예약 불가 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (NotRegisteredStoreException ex){
+        } catch (NotRegisteredStoreException ex) {
             // 등록되지 않은 상점 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
         }
 
     }
+
     @GetMapping("/check/owner")
     @PreAuthorize("hasRole('ROLE_OWNER')")
     public ResponseEntity<?> checkBooking(
-    ){
+    ) {
         try {
             // 예약 건 확인하기
             return ResponseEntity.ok().body(
                     this.reservationService.checkBookingOwner());
-        }catch (EmptyBookingException ex){
+        } catch (EmptyBookingException ex) {
             // 예약건이 없을 때 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
@@ -64,18 +65,18 @@ public class ReservationController {
     public ResponseEntity<?> resultBooking(
             @PathVariable Long reservationId,
             @RequestBody ReservationResult reservationResult
-            ){
+    ) {
         try {
             // 예약 건 확인하기
             this.reservationService.resultBooking(
                     reservationResult, reservationId);
             return ResponseEntity.ok().build();
 
-        }catch (EmptyBookingException ex){
+        } catch (EmptyBookingException ex) {
             // 예약건이 없을 때 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (NotAuthException ex){
+        } catch (NotAuthException ex) {
             // 식당 주인이 아닐 때 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
@@ -87,25 +88,25 @@ public class ReservationController {
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER','ROLE_OWNER')")
     public ResponseEntity<?> checkBookingCustomer(
             @PathVariable Long reservationId
-    ){
-        try{
+    ) {
+        try {
             // 예약 건 확인하기 & 도착 확인 기능 구현
             Reservation.CheckBookingOwner bookingResult =
                     this.reservationService.checkBookingCustomer(reservationId);
             return ResponseEntity.ok().body(bookingResult);
-        }catch (UnauthorizedAccessException ex){
+        } catch (UnauthorizedAccessException ex) {
             // 본인 확인 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (EmptyBookingException ex){
+        } catch (EmptyBookingException ex) {
             // 예약건이 없을 경우 예외처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (HoldingBookingException ex){
+        } catch (HoldingBookingException ex) {
             // 아직 holding 중일 때
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (DenyBookingException ex){
+        } catch (DenyBookingException ex) {
             // 예약 불가 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
@@ -117,30 +118,30 @@ public class ReservationController {
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity<?> checkArrivedCustomer(
             @PathVariable Long reservationId
-    ){
-        try{
+    ) {
+        try {
             // 도착 정보 알리기
             this.reservationService.arrivedChecking(reservationId);
             // 매장에서 로그인해서 처리 -> 예약번호 이외에 다른 정보 필요 X
 
             return ResponseEntity.ok().build();
-        }catch (EmptyBookingException ex){
+        } catch (EmptyBookingException ex) {
             // 예약건이 없을 경우 예외처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (HoldingBookingException ex){
+        } catch (HoldingBookingException ex) {
             // 아직 holding 중일 때
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (DenyBookingException ex){
+        } catch (DenyBookingException ex) {
             // 예약 불가 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (UnauthorizedAccessException ex){
+        } catch (UnauthorizedAccessException ex) {
             // 권한 밖 유저 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
-        }catch (OverBookingTimeException ex){
+        } catch (OverBookingTimeException ex) {
             // 10분전에 도착하지 않았을 시 예외처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
