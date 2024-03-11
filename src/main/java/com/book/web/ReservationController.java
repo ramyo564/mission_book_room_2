@@ -2,10 +2,7 @@ package com.book.web;
 
 import com.book.exception.impl.auth.NotAuthException;
 import com.book.exception.impl.auth.UnauthorizedAccessException;
-import com.book.exception.impl.book.DenyBookingException;
-import com.book.exception.impl.book.EmptyBookingException;
-import com.book.exception.impl.book.FullBookingException;
-import com.book.exception.impl.book.HoldingBookingException;
+import com.book.exception.impl.book.*;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Reservation;
 import com.book.model.ReservationResult;
@@ -141,6 +138,10 @@ public class ReservationController {
                     .body(ex.getMessage() + ex.getStatusCode());
         }catch (UnauthorizedAccessException ex){
             // 권한 밖 유저 예외 처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }catch (OverBookingTimeException ex){
+            // 10분전에 도착하지 않았을 시 예외처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
         }

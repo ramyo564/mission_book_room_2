@@ -22,6 +22,7 @@ public class StoreController {
 
     private final StoreService storeService;
 
+
     @PostMapping("/register")
     @PreAuthorize("hasRole('ROLE_OWNER')")
     public ResponseEntity<?> registerStore(

@@ -13,6 +13,6 @@ public interface StoreRepository
 
     Optional<StoreEntity> findByOwner_PhoneNumberAndName(String phoneNumber, String name);
 
-    Optional<StoreEntity> findByNameAndAddress(String name, String address);
+
 
 }

@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import static com.book.security.JwtUserExtract.currentUser;
 public class StoreService {
 
     private final StoreRepository storeRepository;
+
 
     public StoreEntity register(Store.Register request) {
 

@@ -2,10 +2,7 @@ package com.book.service;
 
 import com.book.exception.impl.auth.NotAuthException;
 import com.book.exception.impl.auth.UnauthorizedAccessException;
-import com.book.exception.impl.book.DenyBookingException;
-import com.book.exception.impl.book.EmptyBookingException;
-import com.book.exception.impl.book.FullBookingException;
-import com.book.exception.impl.book.HoldingBookingException;
+import com.book.exception.impl.book.*;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Reservation;
 import com.book.model.ReservationResult;
@@ -18,7 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class ReservationService {
         // 승인 받은 테이블 갯수
         long countTable = reservationRepository
                 .countByDateAndTimeAndApprovedIsTrue(
-                        booking.getDate(),booking.getTime());
+                        booking.getDate(), booking.getTime());
         log.info(countTable + "승인 받은 테이블 갯수");
 
         if (totalTable > countTable) {
@@ -66,7 +65,7 @@ public class ReservationService {
     }
 
     public List<Reservation.CheckBookingOwner> checkBookingOwner(
-    ){
+    ) {
 
         // 매장 주인 확인 및 예약건 불러오기
         List<ReservationEntity> pendingReservations = reservationRepository
@@ -89,24 +88,24 @@ public class ReservationService {
     }
 
     public void resultBooking(
-            ReservationResult result, Long reservationId){
+            ReservationResult result, Long reservationId) {
         // 예약 건 검색
         ReservationEntity reservation =
                 reservationRepository.findById(reservationId)
                         .orElseThrow(EmptyBookingException::new);
         log.info(reservation.toString() + " 예약건 확인");
-        if(!reservation.getStoreName().getOwner().getPhoneNumber()
-                .equals(currentUser().getPhoneNumber())){
+        if (!reservation.getStoreName().getOwner().getPhoneNumber()
+                .equals(currentUser().getPhoneNumber())) {
             throw new NotAuthException();
         }
 
 
-        if(result.isApproved()){
+        if (result.isApproved()) {
             reservation.setApproved(true);
             reservation.setStatus(BookingStatus.APPROVE);
             reservationRepository.save(reservation);
 
-        }else {
+        } else {
             reservation.setStatus(BookingStatus.DENY);
             reservationRepository.save(reservation);
         }
@@ -142,7 +141,7 @@ public class ReservationService {
 
     }
 
-    public void arrivedChecking(Long reservationId){
+    public void arrivedChecking(Long reservationId) {
         // 예약 건 불러오기
         ReservationEntity reservation =
                 reservationRepository
@@ -153,6 +152,27 @@ public class ReservationService {
         String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
         if (!currentCustomerPhoneNumber.equals(reservation.getCustomerName().getPhoneNumber())) {
             throw new UnauthorizedAccessException();
+        }
+
+        // 현재 시간
+        LocalDateTime now = LocalDateTime.now();
+
+        // 예약 시간
+        LocalDateTime reservationDateTime =
+                reservation.getDate().atTime(
+                        reservation.getTime(), 0);
+
+        // 예약 시간에서 10분을 뺀 시간
+        LocalDateTime tenMinutesBeforeReservation =
+                reservationDateTime.minus(
+                        10, ChronoUnit.MINUTES);
+
+        // 현재 시간이 예약 시간보다 10분 전인지 확인
+        if (!now.isBefore(tenMinutesBeforeReservation)) {
+            // 도착시 10분이 넘어가면 거부
+            reservation.setStatus(BookingStatus.DENY);
+            this.reservationRepository.save(reservation);
+            throw new OverBookingTimeException();
         }
 
         // 예외처리
@@ -171,10 +191,6 @@ public class ReservationService {
         reservation.setArrivedTime(LocalDateTime.now());
         reservationRepository.save(reservation);
     }
-
-
-
-
 
 
 }
