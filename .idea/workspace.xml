@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0fdc620b-2970-4e22-afc4-32d3f03fc0f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/model/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/model/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/StoreRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/StoreEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/StoreEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/StoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/model/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/model/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

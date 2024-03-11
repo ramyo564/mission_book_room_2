@@ -53,4 +53,29 @@ public class Reservation {
                     .build();
         }
     }
+
+    @Data
+    public static class CheckBookingOwner{
+        private String storeName;
+        private String address;
+        private String customerPhoneNumber;
+        private int people;
+        private LocalDate date;
+        private int time;
+        private boolean approved;
+        private String status;
+
+        public CheckBookingOwner(ReservationEntity reservationEntity) {
+            this.storeName = reservationEntity.getStoreName().getName();
+            this.address = reservationEntity.getStoreName().getAddress();
+            this.customerPhoneNumber = reservationEntity.getCustomerName().getPhoneNumber();
+            this.people = reservationEntity.getPeople();
+            this.date = reservationEntity.getDate();
+            this.time = reservationEntity.getTime();
+            this.approved = reservationEntity.isApproved();
+            this.status = reservationEntity.getStatus().toString();
+        }
+    }
+
+
 }

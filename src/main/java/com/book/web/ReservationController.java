@@ -1,5 +1,6 @@
 package com.book.web;
 
+import com.book.exception.impl.book.EmptyBookingException;
 import com.book.exception.impl.book.FullBookingException;
 import com.book.model.Reservation;
 import com.book.persist.ReservationRepository;
@@ -31,6 +32,20 @@ public class ReservationController {
             return ResponseEntity.ok().build();
         }catch (FullBookingException ex){
             // 예약 불가 예외 처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }
+
+    }
+    @GetMapping("/check/owner")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
+    public ResponseEntity<?> checkBooking(
+    ){
+        try {
+            return ResponseEntity.ok().body(
+                    this.reservationService.checkBookingOwner());
+        }catch (EmptyBookingException ex){
+            // 예약건이 없을 때 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
         }
