@@ -1,9 +1,11 @@
 package com.book.service;
 
+import com.book.exception.impl.auth.NotAuthException;
 import com.book.exception.impl.book.EmptyBookingException;
 import com.book.exception.impl.book.FullBookingException;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Reservation;
+import com.book.model.ReservationResult;
 import com.book.persist.BookingStatus;
 import com.book.persist.ReservationRepository;
 import com.book.persist.StoreRepository;
@@ -84,4 +86,27 @@ public class ReservationService {
 
     }
 
+    public void resultBooking(
+            ReservationResult result, Long reservationId){
+        // 예약 건 검색
+        ReservationEntity reservation =
+                reservationRepository.findById(reservationId)
+                        .orElseThrow(EmptyBookingException::new);
+        log.info(reservation.toString() + " 예약건 확인");
+        if(!reservation.getStoreName().getOwner().getPhoneNumber()
+                .equals(currentUser().getPhoneNumber())){
+            throw new NotAuthException();
+        }
+
+
+        if(result.isApproved()){
+            reservation.setApproved(true);
+            reservation.setStatus(BookingStatus.APPROVE);
+            reservationRepository.save(reservation);
+
+        }else {
+            reservation.setStatus(BookingStatus.DENY);
+            reservationRepository.save(reservation);
+        }
+    }
 }
