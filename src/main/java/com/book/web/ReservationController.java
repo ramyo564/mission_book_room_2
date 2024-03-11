@@ -111,15 +111,17 @@ public class ReservationController {
 
     }
 
-//    @GetMapping("/check/customer/{reservationId}")
-//    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
-//    public ResponseEntity<?> checkBookingCustomer(
-//            @PathVariable Long reservationId
-//    ){
-//        // 도착 정보 알리기
-//
-//        return null;
-//    }
+    @PostMapping("/check/customer/{reservationId}")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public ResponseEntity<?> checkArrivedCustomer(
+            @PathVariable Long reservationId
+    ){
+        // 도착 정보 알리기
+        this.reservationService.arrivedChecking(reservationId);
+        // 매장에서 로그인해서 처리 -> 예약번호 이외에 다른 정보 필요 X
+
+        return ResponseEntity.ok().build();
+    }
 
 
 }

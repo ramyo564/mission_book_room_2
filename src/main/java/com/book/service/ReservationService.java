@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,12 +130,51 @@ public class ReservationService {
 
         if (!reservation.isApproved()) {
             if (reservation.getStatus().equals(BookingStatus.DENY)) {
+                // 오너가 예약 거절시
                 throw new DenyBookingException();
             } else if (reservation.getStatus().equals(BookingStatus.HOLDING)) {
+                // 아직 holding 일 때
                 throw new HoldingBookingException();
             }
 
         }
         return new Reservation.CheckBookingOwner(reservation);
+
     }
+
+    public void arrivedChecking(Long reservationId){
+        // 예약 건 불러오기
+        ReservationEntity reservation =
+                reservationRepository
+                        .findById(reservationId)
+                        .orElseThrow(EmptyBookingException::new);
+
+        //본인 확인
+        String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
+        if (!currentCustomerPhoneNumber.equals(reservation.getCustomerName().getPhoneNumber())) {
+            throw new UnauthorizedAccessException();
+        }
+
+        // 예외처리
+        if (!reservation.isApproved()) {
+            if (reservation.getStatus().equals(BookingStatus.DENY)) {
+                // 오너가 예약 거절시
+                throw new DenyBookingException();
+            } else if (reservation.getStatus().equals(BookingStatus.HOLDING)) {
+                // 아직 holding 일 때
+                throw new HoldingBookingException();
+            }
+
+        }
+        // 도착
+        reservation.setArrived(true);
+        reservation.setArrivedTime(LocalDateTime.now());
+        reservationRepository.save(reservation);
+    }
+
+
+
+
+
+
 }

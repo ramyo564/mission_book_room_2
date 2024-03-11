@@ -45,4 +45,10 @@ public class ReservationEntity {
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
+    @Column
+    private boolean arrived;
+
+    @Column
+    private LocalDateTime arrivedTime;
+
 }
