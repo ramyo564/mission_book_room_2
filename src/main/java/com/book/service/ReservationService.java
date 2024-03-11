@@ -1,8 +1,11 @@
 package com.book.service;
 
 import com.book.exception.impl.auth.NotAuthException;
+import com.book.exception.impl.auth.UnauthorizedAccessException;
+import com.book.exception.impl.book.DenyBookingException;
 import com.book.exception.impl.book.EmptyBookingException;
 import com.book.exception.impl.book.FullBookingException;
+import com.book.exception.impl.book.HoldingBookingException;
 import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Reservation;
 import com.book.model.ReservationResult;
@@ -15,10 +18,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static com.book.security.JwtUserExtract.currentUser;
 
@@ -108,5 +109,32 @@ public class ReservationService {
             reservation.setStatus(BookingStatus.DENY);
             reservationRepository.save(reservation);
         }
+    }
+
+    public Reservation.CheckBookingOwner checkBookingCustomer(
+            Long reservationId) {
+        // 예약 건 불러오기
+        ReservationEntity reservation =
+                reservationRepository
+                        .findById(reservationId)
+                        .orElseThrow(EmptyBookingException::new);
+
+        //본인 확인
+        String currentCustomerPhoneNumber = currentUser().getPhoneNumber();
+        log.info("현재 로그인한 고객 정보 " + currentCustomerPhoneNumber);
+        log.info("예약자 고객 정보 " + reservation.getCustomerName().getPhoneNumber());
+        if (!currentCustomerPhoneNumber.equals(reservation.getCustomerName().getPhoneNumber())) {
+            throw new UnauthorizedAccessException();
+        }
+
+        if (!reservation.isApproved()) {
+            if (reservation.getStatus().equals(BookingStatus.DENY)) {
+                throw new DenyBookingException();
+            } else if (reservation.getStatus().equals(BookingStatus.HOLDING)) {
+                throw new HoldingBookingException();
+            }
+
+        }
+        return new Reservation.CheckBookingOwner(reservation);
     }
 }
