@@ -14,6 +14,6 @@ public interface ReservationRepository
 
     Optional<List<ReservationEntity>> findByStoreName_Owner_IdAndApprovedIsFalse(Long id);
 
-    Optional<ReservationEntity> findByIdAndApprovedIsTrue(Long id);
+    Optional<ReservationEntity> findByIdAndApprovedIsTrueAndArrivedIsTrue(Long id);
 
 }

@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0fdc620b-2970-4e22-afc4-32d3f03fc0f6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/ReviewEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/persist/entity/ReviewEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/book/web/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/book/web/ReviewController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -38,6 +38,12 @@ public class ReviewEntity {
     @Column
     private int rating;
     @Column
-    private LocalDateTime time;
+    private LocalDateTime createdAt;
+    @Column
+    private LocalDateTime updateAt;
+    @Column
+    private boolean deleted;
+    @Column
+    private LocalDateTime deletedAt;
 
 }

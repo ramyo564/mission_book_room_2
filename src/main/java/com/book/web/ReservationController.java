@@ -6,6 +6,7 @@ import com.book.exception.impl.book.DenyBookingException;
 import com.book.exception.impl.book.EmptyBookingException;
 import com.book.exception.impl.book.FullBookingException;
 import com.book.exception.impl.book.HoldingBookingException;
+import com.book.exception.impl.store.NotRegisteredStoreException;
 import com.book.model.Reservation;
 import com.book.model.ReservationResult;
 import com.book.service.ReservationService;
@@ -36,6 +37,10 @@ public class ReservationController {
             return ResponseEntity.ok().build();
         }catch (FullBookingException ex){
             // 예약 불가 예외 처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }catch (NotRegisteredStoreException ex){
+            // 등록되지 않은 상점 예외 처리
             return ResponseEntity.status(ex.getStatusCode())
                     .body(ex.getMessage() + ex.getStatusCode());
         }
@@ -116,11 +121,30 @@ public class ReservationController {
     public ResponseEntity<?> checkArrivedCustomer(
             @PathVariable Long reservationId
     ){
-        // 도착 정보 알리기
-        this.reservationService.arrivedChecking(reservationId);
-        // 매장에서 로그인해서 처리 -> 예약번호 이외에 다른 정보 필요 X
+        try{
+            // 도착 정보 알리기
+            this.reservationService.arrivedChecking(reservationId);
+            // 매장에서 로그인해서 처리 -> 예약번호 이외에 다른 정보 필요 X
 
-        return ResponseEntity.ok().build();
+            return ResponseEntity.ok().build();
+        }catch (EmptyBookingException ex){
+            // 예약건이 없을 경우 예외처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }catch (HoldingBookingException ex){
+            // 아직 holding 중일 때
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }catch (DenyBookingException ex){
+            // 예약 불가 예외 처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }catch (UnauthorizedAccessException ex){
+            // 권한 밖 유저 예외 처리
+            return ResponseEntity.status(ex.getStatusCode())
+                    .body(ex.getMessage() + ex.getStatusCode());
+        }
+
     }
 
 
