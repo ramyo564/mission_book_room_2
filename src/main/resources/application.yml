@@ -1,12 +1,12 @@
 spring:
   application:
-    name: dayone-reservation
+    name: dayone-book-table
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/book_table?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: Mysql1234@@!!
+    password: {password}
 
   jpa:
     hibernate:
